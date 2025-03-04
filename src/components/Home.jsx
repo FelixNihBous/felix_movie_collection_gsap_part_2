@@ -55,7 +55,9 @@ function Home() {
         const button = searchButtonRef.current;
         if (!button) return;
 
-        button.addEventListener('mouseenter', () => {
+        const ctx = gsap.context(() => {
+            button.addEventListener('mouseenter', () => {
+
             if (gsap.isTweening(button)) {
                 gsap.killTweensOf(button);
             }
@@ -63,7 +65,8 @@ function Home() {
 
         });
 
-        button.addEventListener('mouseleave', () => {
+            button.addEventListener('mouseleave', () => {
+
             if (gsap.isTweening(button)) {
                 gsap.killTweensOf(button);
             }
@@ -71,13 +74,17 @@ function Home() {
 
         });
 
+        }, searchButtonRef);
+        
         // Click animation
+
         button.addEventListener('click', (e) => {
             const tl = gsap.timeline();
             tl.to(button, { scale: 0.7, duration: 0.1 })
               .to(button, { scale: 1, duration: 0.2 });
         });
-    }, []);
+    }, [searchButtonRef]);
+
 
     gsap.defaults({ duration: 0.2, ease: "power2.out" });
 
